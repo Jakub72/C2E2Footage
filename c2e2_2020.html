@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C2E2 2020 Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-black text-white">
+
+    <header class="site-header">
+        <nav class="container mx-auto flex justify-center items-center">
+			<a href="index.html" class="nav-button active">About</a>
+            <a href="c2e2_2025.html" class="nav-button">C2E2 2025</a>
+            <a href="c2e2_2024.html" class="nav-button">C2E2 2024</a>
+            <a href="c2e2_2020.html" class="nav-button active">C2E2 2020</a>
+            <a href="c2e2_2019.html" class="nav-button">C2E2 2019</a>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <div id="gallery-container" class="masonry-gallery">
+        </div>
+    </main>
+
+    <div id="lightbox" class="lightbox-modal hidden">
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-content">
+            <div id="lightbox-media-container"></div>
+        </div>
+        <a class="lightbox-prev" title="Previous">&#10094;</a>
+        <a class="lightbox-next" title="Next">&#10095;</a>
+    </div>
+
+    <script src="gallery.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const c2e2_2020_media = [
+                { type: 'image', src: 'https://i.imgur.com/YVYA9xv.png' }, { type: 'image', src: 'https://i.imgur.com/YnNRM15.png' },
+                { type: 'image', src: 'https://i.imgur.com/003jKbC.png' }, { type: 'image', src: 'https://i.imgur.com/TuIqr0y.png' },
+                { type: 'image', src: 'https://i.imgur.com/ON0u2nc.png' }, { type: 'image', src: 'https://i.imgur.com/UUgi0is.png' },
+                { type: 'image', src: 'https://i.imgur.com/TGzTYSp.png' }, { type: 'image', src: 'https://i.imgur.com/rjIeltI.png' },
+                { type: 'image', src: 'https://i.imgur.com/S9hTcCo.jpeg' }, { type: 'image', src: 'https://i.imgur.com/zHYRB9G.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/vjb9Xhb.jpeg' }, { type: 'image', src: 'https://i.imgur.com/5QjyzNz.jpeg' },
+                { type: 'youtube', src: 'https://www.youtube.com/watch?v=N0OqDjRgRjM', thumbnail: 'https://img.youtube.com/vi/YVYA9xv/0.jpg' },
+                { type: 'image', src: 'https://i.imgur.com/SQpRZIq.png' }, { type: 'image', src: 'https://i.imgur.com/6P3reIw.png' },
+                { type: 'image', src: 'https://i.imgur.com/SQpRZIq.png' }, { type: 'image', src: 'https://i.imgur.com/YzSaW0s.png' },
+                { type: 'image', src: 'https://i.imgur.com/QYubpLz.png' }, { type: 'image', src: 'https://i.imgur.com/Gf8YiB4.png' }
+            ];
+            
+            initializeC2E2Gallery(c2e2_2020_media);
+        });
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</body>
+</html>

@@ -1,16 +1,13 @@
 /*
  * css/styles.css
- * This file contains styles shared across all pages of the C2E2 gallery website.
  */
 
-/* --- Base and Font Styles --- */
 body {
     font-family: 'Inter', sans-serif;
-    background-color: #000000; /* Ensure background is black */
+    background-color: #000000;
     color: #ffffff;
 }
 
-/* Helper to center content */
 .container {
     margin-left: auto;
     margin-right: auto;
@@ -19,58 +16,53 @@ body {
 }
 
 
-/* --- Header and Navigation --- */
 .site-header {
-    background-color: #e13018; /* Updated header color */
+    background-color: #e13018;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
     position: sticky;
     top: 0;
     z-index: 50;
-    padding: 1rem 0; /* Larger vertical padding for the banner */
+    padding: 1rem 0;
 }
 
 .site-header nav {
     display: flex;
-    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 1rem; /* Space between buttons */
+    gap: 1rem;
 }
 
 .nav-button {
-    padding: 0.75rem 1.5rem; /* Larger buttons */
-    background-color: #FBBF24; /* Yellow button (Tailwind yellow-400) */
-    color: #000000; /* Black text */
-    font-weight: 700; /* Bold font */
-    border-radius: 0.5rem; /* Rounded corners */
+    padding: 0.75rem 1.5rem;
+    background-color: #FBBF24;
+    color: #000000;
+    font-weight: 700;
+    border-radius: 0.5rem;
     text-decoration: none;
     transition: background-color 0.3s ease-in-out, transform 0.2s ease;
 }
 
 .nav-button:hover {
-    background-color: #FCD34D; /* Lighter yellow on hover (Tailwind yellow-300) */
-    transform: translateY(-2px); /* Subtle lift effect */
+    background-color: #FCD34D;
+    transform: translateY(-2px);
 }
 
-/* Style for the currently active page button */
 .nav-button.active {
-    background-color: #FCD34D; /* Lighter yellow */
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); /* Inner shadow for active state */
+    background-color: #FCD34D;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
 }
 
 
-/* --- Masonry Gallery Layout --- */
 .masonry-gallery {
-    column-count: 2; /* Default for mobile */
+    column-count: 2;
     column-gap: 1rem;
 }
 
-/* Responsive adjustments for different screen sizes */
 @media (min-width: 640px) { .masonry-gallery { column-count: 3; } }
 @media (min-width: 1024px) { .masonry-gallery { column-count: 4; } }
 @media (min-width: 1280px) { .masonry-gallery { column-count: 5; } }
 
-/* Individual items within the gallery */
 .gallery-item {
     margin-bottom: 1rem;
     break-inside: avoid;
@@ -93,10 +85,9 @@ body {
     height: auto;
     display: block;
     border-radius: 0.5rem;
-    background-color: #374151; /* Dark placeholder color */
+    background-color: #374151;
 }
 
-/* Overlay for videos/youtube to show a play icon */
 .video-overlay {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -119,14 +110,13 @@ body {
     text-shadow: 0 0 15px rgba(0,0,0,0.7);
 }
 
-/* --- Lightbox Modal Styles --- */
 .lightbox-modal {
     position: fixed;
     z-index: 1000;
     left: 0; top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.95); /* More opaque background */
+    background-color: rgba(0, 0, 0, 0.95);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -162,16 +152,15 @@ body {
     max-height: 90vh;
     object-fit: contain;
     border-radius: 0.5rem;
-    box-shadow: 0 0 40px rgba(251, 191, 36, 0.3); /* Yellow glow */
+    box-shadow: 0 0 40px rgba(251, 191, 36, 0.3);
     margin: 0 auto;
     display: block;
 }
 
-/* Responsive container for YouTube iframe */
 .lightbox-youtube-embed {
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    padding-bottom: 56.25%;
     height: 0;
 }
 .lightbox-youtube-embed iframe {
@@ -196,7 +185,7 @@ body {
 
 .lightbox-close:hover,
 .lightbox-close:focus {
-    color: #FBBF24; /* Yellow hover for close button */
+    color: #FBBF24;
     text-decoration: none;
 }
 
@@ -222,5 +211,5 @@ body {
 
 .lightbox-prev:hover,
 .lightbox-next:hover {
-    background-color: rgba(251, 191, 36, 0.3); /* Yellowish transparent background on hover */
+    background-color: rgba(251, 191, 36, 0.3);
 }

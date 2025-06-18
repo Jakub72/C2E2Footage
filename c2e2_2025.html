@@ -4,19 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C2E2 2025 Gallery</title>
-    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Path to your updated stylesheet -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body class="bg-black text-white">
 
-    <!-- Sticky Header Navigation -->
     <header class="site-header">
         <nav class="container mx-auto flex justify-center items-center">
-            <!-- Navigation Buttons -->
 			<a href="index.html" class="nav-button active">About</a>
             <a href="c2e2_2025.html" class="nav-button active">C2E2 2025</a>
             <a href="c2e2_2024.html" class="nav-button">C2E2 2024</a>
@@ -25,15 +21,11 @@
         </nav>
     </header>
 
-    <!-- Main Content Area -->
     <main class="container mx-auto p-4">
-        <!-- Masonry Gallery Container -->
         <div id="gallery-container" class="masonry-gallery">
-            <!-- Media items will be dynamically inserted here by JavaScript -->
         </div>
     </main>
 
-    <!-- Lightbox Modal for Enlarged View -->
     <div id="lightbox" class="lightbox-modal hidden">
         <span class="lightbox-close">&times;</span>
         <div class="lightbox-content">
@@ -43,13 +35,10 @@
         <a class="lightbox-next" title="Next">&#10095;</a>
     </div>
 
-    <!-- Reusable gallery logic script -->
     <script src="gallery.js"></script>
 
-    <!-- Page-specific data and initialization script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // Data for C2E2 2025 Gallery
             const c2e2_2025_media = [
                 { type: 'image', src: 'https://i.imgur.com/mssCR7a.png' }, { type: 'image', src: 'https://i.imgur.com/SYzQlcd.png' },
                 { type: 'image', src: 'https://i.imgur.com/dO6qtFo.png' }, { type: 'image', src: 'https://i.imgur.com/oss0KX6.png' },
@@ -92,11 +81,9 @@
                 { type: 'youtube', src: 'https://www.youtube.com/embed/EivIBhXsNj4', thumbnail: 'https://img.youtube.com/vi/EivIBhXsNj4/hqdefault.jpg' }
             ];
             
-            // Initialize the gallery with the specified media
             initializeC2E2Gallery(c2e2_2025_media);
         });
     </script>
-    <!-- Tailwind CSS - place at the end of body for potentially faster perceived load -->
     <script src="https://cdn.tailwindcss.com"></script>
 </body>
 </html>
