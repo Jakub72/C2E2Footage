@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C2E2 2024 Gallery</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Path to your updated stylesheet -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-black text-white">
+
+    <!-- Sticky Header Navigation -->
+    <header class="site-header">
+        <nav class="container mx-auto flex justify-center items-center">
+            <!-- Navigation Buttons -->
+            <a href="c2e2_2025.html" class="nav-button">C2E2 2025</a>
+            <a href="c2e2_2024.html" class="nav-button active">C2E2 2024</a>
+            <a href="c2e2_2020.html" class="nav-button">C2E2 2020</a>
+            <a href="c2e2_2019.html" class="nav-button">C2E2 2019</a>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container mx-auto p-4">
+        <!-- Masonry Gallery Container -->
+        <div id="gallery-container" class="masonry-gallery">
+            <!-- Media items will be dynamically inserted here by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Lightbox Modal for Enlarged View -->
+    <div id="lightbox" class="lightbox-modal hidden">
+        <span class="lightbox-close">&times;</span>
+        <div class="lightbox-content">
+            <div id="lightbox-media-container"></div>
+        </div>
+        <a class="lightbox-prev" title="Previous">&#10094;</a>
+        <a class="lightbox-next" title="Next">&#10095;</a>
+    </div>
+
+    <!-- Reusable gallery logic script -->
+    <script src="gallery.js"></script>
+
+    <!-- Page-specific data and initialization script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Data for C2E2 2024 Gallery
+            const c2e2_2024_media = [
+                { type: 'image', src: 'https://i.imgur.com/EqtTARp.jpeg' }, { type: 'image', src: 'https://i.imgur.com/MYmERO4.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/Lgwgquq.jpeg' }, { type: 'video', src: 'https://i.imgur.com/EDrQHSI.mp4' },
+                { type: 'image', src: 'https://i.imgur.com/Kc5d5zA.jpeg' }, { type: 'image', src: 'https://i.imgur.com/962RBfM.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/vyA5u6C.jpeg' }, { type: 'video', src: 'https://i.imgur.com/bOfe971.mp4' },
+                { type: 'image', src: 'https://i.imgur.com/lPXolOb.jpeg' }, { type: 'image', src: 'https://i.imgur.com/pjFh4Z5.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/w4jkHuZ.jpeg' }, { type: 'image', src: 'https://i.imgur.com/RPVbg8o.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/1EFUHug.jpeg' }, { type: 'image', src: 'https://i.imgur.com/XCujUx5.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/sRZqdK9.jpeg' }, { type: 'video', src: 'https://i.imgur.com/xS9PIJn.mp4' },
+                { type: 'image', src: 'https://i.imgur.com/XrS2eTP.jpeg' }, { type: 'image', src: 'https://i.imgur.com/9orNIr6.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/tXj6E1E.jpeg' }, { type: 'image', src: 'https://i.imgur.com/8UyzJcv.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/nc1QGgH.jpeg' }, { type: 'image', src: 'https://i.imgur.com/2vEMWXO.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/LeQ7SQ9.jpeg' }, { type: 'image', src: 'https://i.imgur.com/uNtqt44.jpeg' },
+                { type: 'video', src: 'https://i.imgur.com/86aMdk7.mp4' }, { type: 'image', src: 'https://i.imgur.com/8pIkDva.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/m5fruf5.jpeg' }, { type: 'image', src: 'https://i.imgur.com/GivtwCr.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/H1KT5xB.jpeg' }, { type: 'image', src: 'https://i.imgur.com/w1b9hhe.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/l4uFGBW.jpeg' }, { type: 'image', src: 'https://i.imgur.com/xSjcq37.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/yaXQ5h3.jpeg' }, { type: 'image', src: 'https://i.imgur.com/sJpLMQ9.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/V2svrEG.jpeg' }, { type: 'image', src: 'https://i.imgur.com/9Ef3MGv.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/yJVPBqq.jpeg' }, { type: 'image', src: 'https://i.imgur.com/CLVSFhZ.jpeg' },
+                { type: 'video', src: 'https://i.imgur.com/47e5nzl.mp4' }, { type: 'image', src: 'https://i.imgur.com/u0ZF8qc.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/h9BQKen.jpeg' }, { type: 'image', src: 'https://i.imgur.com/tsQ0LW7.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/cYfkc7M.jpeg' }, { type: 'image', src: 'https://i.imgur.com/dr7Lxbo.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/6m3i8L1.jpeg' }, { type: 'image', src: 'https://i.imgur.com/i1MsvDs.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/AiWJA60.jpeg' }, { type: 'image', src: 'https://i.imgur.com/BSMB0ME.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/RkfnNjs.jpeg' }, { type: 'image', src: 'https://i.imgur.com/PTeHss6.jpeg' },
+                { type: 'video', src: 'https://i.imgur.com/fCPkHnL.mp4' }, { type: 'image', src: 'https://i.imgur.com/l1g1ssP.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/PLzw1oc.jpeg' }, { type: 'image', src: 'https://i.imgur.com/ajbLsvd.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/w84g0s9.jpeg' }, { type: 'image', src: 'https://i.imgur.com/AUFiN9q.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/V7en6Ur.jpeg' }, { type: 'image', src: 'https://i.imgur.com/2TkQ03T.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/bRXUrnQ.jpeg' }, { type: 'video', src: 'https://i.imgur.com/jh1bVlH.mp4' },
+                { type: 'image', src: 'https://i.imgur.com/za606JV.jpeg' }, { type: 'image', src: 'https://i.imgur.com/vydNDpy.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/CK5GFDn.jpeg' }, { type: 'image', src: 'https://i.imgur.com/KtogVEl.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/67JJuQg.jpeg' }, { type: 'image', src: 'https://i.imgur.com/0fOud2d.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/lUl4MBk.jpeg' }, { type: 'image', src: 'https://i.imgur.com/P3S8Tc3.jpeg' },
+                { type: 'video', src: 'https://i.imgur.com/VIDofa4.mp4' }, { type: 'image', src: 'https://i.imgur.com/ugzoW2e.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/ZMvhOLJ.jpeg' }, { type: 'image', src: 'https://i.imgur.com/SCueHf5.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/djMfN5U.jpeg' }, { type: 'image', src: 'https://i.imgur.com/0Gz9SvW.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/HT5JiR8.jpeg' }, { type: 'image', src: 'https://i.imgur.com/3oSAkBO.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/L50kUJ2.jpeg' }, { type: 'image', src: 'https://i.imgur.com/PwdcN0C.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/GtMnFvL.jpeg' }, { type: 'image', src: 'https://i.imgur.com/KTxqxSS.jpeg' },
+                { type: 'video', src: 'https://i.imgur.com/N4ix8J4.mp4' }, { type: 'image', src: 'https://i.imgur.com/MTiivVl.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/SyZ98Pl.jpeg' }, { type: 'image', src: 'https://i.imgur.com/RtvIEXe.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/T5uoEAN.jpeg' }, { type: 'image', src: 'https://i.imgur.com/9ZgdGWD.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/1bd5nES.jpeg' }, { type: 'image', src: 'https://i.imgur.com/W1yqdYO.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/otuedFp.jpeg' }, { type: 'image', src: 'https://i.imgur.com/Ic6u63T.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/QNScuCL.jpeg' }, { type: 'image', src: 'https://i.imgur.com/Ep0j6eb.jpeg' },
+                { type: 'video', src: 'https://i.imgur.com/x9JzPnk.mp4' }, { type: 'image', src: 'https://i.imgur.com/sD6ya97.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/4WSsguv.jpeg' }, { type: 'image', src: 'https://i.imgur.com/NZ0RFqI.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/YWbZSeA.jpeg' }, { type: 'image', src: 'https://i.imgur.com/nxLdsgp.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/SdhyAfj.jpeg' }, { type: 'image', src: 'https://i.imgur.com/3MkTzug.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/f5BV6dz.jpeg' }, { type: 'image', src: 'https://i.imgur.com/85oCAP3.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/oEvCyPh.jpeg' }, { type: 'image', src: 'https://i.imgur.com/yqEAzvV.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/XjeqfJJ.jpeg' }, { type: 'video', src: 'https://i.imgur.com/WEhRq89.mp4' },
+                { type: 'image', src: 'https://i.imgur.com/mao3HAR.jpeg' }, { type: 'image', src: 'https://i.imgur.com/VyeKhir.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/9F64OyU.jpeg' }, { type: 'image', src: 'https://i.imgur.com/QwDb2gF.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/iSJqxda.jpeg' }, { type: 'image', src: 'https://i.imgur.com/5XNuxfm.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/IlBffuv.jpeg' }, { type: 'image', src: 'https://i.imgur.com/CXY8jis.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/hsDuWbK.jpeg' }, { type: 'image', src: 'https://i.imgur.com/BZ0vgtw.jpeg' },
+                { type: 'image', src: 'https://i.imgur.com/1O1OWOo.jpeg' }, { type: 'image', src: 'https://i.imgur.com/GcrzH1I.jpeg' },
+                { type: 'video', src: 'https://i.imgur.com/6e90Tsh.mp4' },
+            ];
+            
+            // Initialize the gallery with the specified media
+            initializeC2E2Gallery(c2e2_2024_media);
+        });
+    </script>
+    <!-- Tailwind CSS - place at the end of body for potentially faster perceived load -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+/*
+ * css/styles.css
+ * This file contains styles shared across all pages of the C2E2 gallery website.
+ */
+
+/* --- Base and Font Styles --- */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #000000; /* Ensure background is black */
+    color: #ffffff;
+}
+
+/* Helper to center content */
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+
+/* --- Header and Navigation --- */
+.site-header {
+    background-color: #e13018; /* Updated header color */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: 1rem 0; /* Larger vertical padding for the banner */
+}
+
+.site-header nav {
+    display: flex;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    justify-content: center;
+    align-items: center;
+    gap: 1rem; /* Space between buttons */
+}
+
+.nav-button {
+    padding: 0.75rem 1.5rem; /* Larger buttons */
+    background-color: #FBBF24; /* Yellow button (Tailwind yellow-400) */
+    color: #000000; /* Black text */
+    font-weight: 700; /* Bold font */
+    border-radius: 0.5rem; /* Rounded corners */
+    text-decoration: none;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+}
+
+.nav-button:hover {
+    background-color: #FCD34D; /* Lighter yellow on hover (Tailwind yellow-300) */
+    transform: translateY(-2px); /* Subtle lift effect */
+}
+
+/* Style for the currently active page button */
+.nav-button.active {
+    background-color: #FCD34D; /* Lighter yellow */
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); /* Inner shadow for active state */
+}
+
+
+/* --- Masonry Gallery Layout --- */
+.masonry-gallery {
+    column-count: 2; /* Default for mobile */
+    column-gap: 1rem;
+}
+
+/* Responsive adjustments for different screen sizes */
+@media (min-width: 640px) { .masonry-gallery { column-count: 3; } }
+@media (min-width: 1024px) { .masonry-gallery { column-count: 4; } }
+@media (min-width: 1280px) { .masonry-gallery { column-count: 5; } }
+
+/* Individual items within the gallery */
+.gallery-item {
+    margin-bottom: 1rem;
+    break-inside: avoid;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 15px rgba(255, 255, 255, 0.1);
+}
+
+.gallery-item img,
+.gallery-item video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 0.5rem;
+    background-color: #374151; /* Dark placeholder color */
+}
+
+/* Overlay for videos/youtube to show a play icon */
+.video-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    transition: background 0.3s ease;
+    opacity: 0;
+}
+
+.gallery-item:hover .video-overlay {
+    opacity: 1;
+}
+
+.play-icon {
+    font-size: 4rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 15px rgba(0,0,0,0.7);
+}
+
+/* --- Lightbox Modal Styles --- */
+.lightbox-modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95); /* More opaque background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.4s;
+}
+
+.lightbox-modal.hidden {
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.lightbox-content {
+    width: 90%;
+    max-width: 1100px;
+    max-height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#lightbox-media-container {
+    width: 100%;
+    height: 100%;
+}
+
+#lightbox-media-container img,
+#lightbox-media-container video {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 40px rgba(251, 191, 36, 0.3); /* Yellow glow */
+    margin: 0 auto;
+    display: block;
+}
+
+/* Responsive container for YouTube iframe */
+.lightbox-youtube-embed {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+}
+.lightbox-youtube-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+.lightbox-close {
+    position: absolute;
+    top: 15px; right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus {
+    color: #FBBF24; /* Yellow hover for close button */
+    text-decoration: none;
+}
+
+.lightbox-prev,
+.lightbox-next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    transition: 0.3s ease;
+    user-select: none;
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 0.5rem;
+    z-index: 1001;
+}
+
+.lightbox-prev { left: 1rem; }
+.lightbox-next { right: 1rem; }
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+    background-color: rgba(251, 191, 36, 0.3); /* Yellowish transparent background on hover */
+}
