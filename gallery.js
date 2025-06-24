@@ -1,18 +1,17 @@
-function initializeC2E2Gallery(mediaItems) {
+function initializeC2E2Gallery(media) {
     const galleryContainer = document.getElementById('gallery-container');
     const lightbox = document.getElementById('lightbox');
     const lightboxMediaContainer = document.getElementById('lightbox-media-container');
-    const closeButton = document.querySelector('.lightbox-close');
-    const prevButton = document.querySelector('.lightbox-prev');
-    const nextButton = document.querySelector('.lightbox-next');
+    const lightboxClose = document.querySelector('.lightbox-close');
+    const lightboxPrev = document.querySelector('.lightbox-prev');
+    const lightboxNext = document.querySelector('.lightbox-next');
 
-    if (!galleryContainer || !lightbox || !lightboxMediaContainer || !closeButton || !prevButton || !nextButton) {
-        console.error("Gallery initialization failed: One or more required HTML elements are missing.");
+    if (!galleryContainer || !lightbox || !lightboxMediaContainer) {
+        console.error('Essential gallery or lightbox elements are missing from the HTML.');
         return;
     }
 
-    let currentIndex = 0;
-    let shuffledItems = [...mediaItems];
+    let currentMediaIndex = 0;
 
     function shuffleArray(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -21,158 +20,177 @@ function initializeC2E2Gallery(mediaItems) {
         }
     }
 
-    function populateGallery() {
-        galleryContainer.innerHTML = '';
+    function getYouTubeID(url) {
+        let id = '';
+        const urlObj = new URL(url);
+        if (urlObj.hostname === 'youtu.be') {
+            id = urlObj.pathname.slice(1);
+        } else if (urlObj.hostname === 'www.youtube.com' || urlObj.hostname === 'youtube.com') {
+            id = urlObj.searchParams.get('v');
+        }
+        return id;
+    }
 
-        shuffledItems.forEach((item, index) => {
+    function renderGallery() {
+        galleryContainer.innerHTML = '';
+        const mediaToRender = [...media];
+
+        const isDesktop = window.innerWidth >= 768; // Tailwind's 'md' breakpoint
+
+        if (isDesktop) {
+            shuffleArray(mediaToRender);
+        }
+
+        mediaToRender.forEach((mediaItem, index) => {
             const galleryItem = document.createElement('div');
             galleryItem.className = 'gallery-item';
-            galleryItem.dataset.index = index;
 
-            if (item.type === 'image') {
+            const createVideoOverlay = () => {
+                const overlay = document.createElement('div');
+                overlay.className = 'video-overlay';
+                const playIcon = document.createElement('div');
+                playIcon.className = 'play-icon';
+                playIcon.textContent = '▶';
+                overlay.appendChild(playIcon);
+                galleryItem.appendChild(overlay);
+            };
+
+            if (mediaItem.type === 'image') {
                 const img = document.createElement('img');
-                img.src = 'https://placehold.co/400x600/1f2937/4b5563?text=Loading...';
-                img.dataset.src = item.src;
-                img.alt = `C2E2 Gallery Image ${index + 1}`;
+                img.src = mediaItem.src;
                 img.loading = 'lazy';
-                img.onerror = function() {
-                    this.onerror = null;
-                    this.src = 'https://placehold.co/400x600/ef4444/ffffff?text=Image+Failed';
-                };
+                img.decoding = 'async';
                 galleryItem.appendChild(img);
-            } else if (item.type === 'video') {
+            } else if (mediaItem.type === 'video') {
                 const video = document.createElement('video');
-                video.dataset.src = item.src;
-                video.playsInline = true;
-                video.loop = true;
+                video.src = mediaItem.src;
+                video.loading = 'lazy';
                 video.muted = true;
+                video.playsInline = true;
+                video.autoplay = true;
+                video.loop = true;
                 galleryItem.appendChild(video);
-                const overlay = document.createElement('div');
-                overlay.className = 'video-overlay';
-                overlay.innerHTML = '<div class="play-icon">▶</div>';
-                galleryItem.appendChild(overlay);
-            } else if (item.type === 'youtube') {
+                createVideoOverlay();
+            } else if (mediaItem.type === 'youtube') {
+                const videoId = getYouTubeID(mediaItem.src);
                 const img = document.createElement('img');
-                img.src = 'https://placehold.co/400x600/1f2937/4b5563?text=Loading...';
-                img.dataset.src = item.thumbnail;
-                img.alt = `YouTube Video ${index + 1}`;
+                img.src = mediaItem.thumbnail || `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
                 img.loading = 'lazy';
-                img.onerror = function() {
-                    this.onerror = null;
-                    this.src = 'https://placehold.co/400x600/ef4444/ffffff?text=Image+Failed';
-                };
+                img.decoding = 'async';
                 galleryItem.appendChild(img);
-                const overlay = document.createElement('div');
-                overlay.className = 'video-overlay';
-                overlay.innerHTML = '<div class="play-icon">▶</div>';
-                galleryItem.appendChild(overlay);
+                createVideoOverlay();
             }
 
+            galleryItem.addEventListener('click', () => {
+                openLightbox(media.indexOf(mediaItem));
+            });
             galleryContainer.appendChild(galleryItem);
         });
     }
 
-    function setupLazyLoader() {
-        const lazyItems = document.querySelectorAll('[data-src]');
-        
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const mediaElement = entry.target;
-                    mediaElement.src = mediaElement.dataset.src;
-                    
-                    if (mediaElement.tagName === 'VIDEO') {
-                       mediaElement.play().catch(error => {
-                           console.warn("Video autoplay prevented:", error);
-                       });
-                    }
-                    
-                    observer.unobserve(mediaElement);
-                }
-            });
-        }, { 
-            rootMargin: "0px 0px 250px 0px" 
-        });
-
-        lazyItems.forEach(item => observer.observe(item));
+    function openLightbox(index) {
+        currentMediaIndex = index;
+        lightbox.classList.remove('hidden');
+        displayMediaInLightbox();
     }
 
-    function showLightbox(index) {
-        currentIndex = parseInt(index);
-        const item = shuffledItems[currentIndex];
-        
+    function closeLightbox() {
+        lightbox.classList.add('hidden');
         lightboxMediaContainer.innerHTML = '';
+    }
 
-        if (item.type === 'image') {
+    function showNextMedia() {
+        currentMediaIndex = (currentMediaIndex + 1) % media.length;
+        displayMediaInLightbox();
+    }
+
+    function showPrevMedia() {
+        currentMediaIndex = (currentMediaIndex - 1 + media.length) % media.length;
+        displayMediaInLightbox();
+    }
+
+    function displayMediaInLightbox() {
+        lightboxMediaContainer.innerHTML = '';
+        const mediaItem = media[currentMediaIndex];
+
+        if (mediaItem.type === 'image') {
             const img = document.createElement('img');
-            img.src = item.src;
-            img.alt = `C2E2 Gallery Image ${currentIndex + 1}`;
+            img.src = mediaItem.src;
             lightboxMediaContainer.appendChild(img);
-        } else if (item.type === 'video') {
+        } else if (mediaItem.type === 'video') {
             const video = document.createElement('video');
-            video.src = item.src;
+            video.src = mediaItem.src;
             video.controls = true;
             video.autoplay = true;
             video.loop = true;
             lightboxMediaContainer.appendChild(video);
-        } else if (item.type === 'youtube') {
+        } else if (mediaItem.type === 'youtube') {
+            const videoId = getYouTubeID(mediaItem.src);
             const embedContainer = document.createElement('div');
             embedContainer.className = 'lightbox-youtube-embed';
             const iframe = document.createElement('iframe');
-            iframe.src = `${item.src}?autoplay=1&rel=0`;
-            iframe.title = "YouTube video player";
-            iframe.frameBorder = "0";
-            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-            iframe.allowFullscreen = true;
+            iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+            iframe.setAttribute('allowfullscreen', '');
             embedContainer.appendChild(iframe);
             lightboxMediaContainer.appendChild(embedContainer);
         }
-
-        lightbox.classList.remove('hidden');
-        document.body.style.overflow = 'hidden';
     }
 
-    function hideLightbox() {
-        lightbox.classList.add('hidden');
-        document.body.style.overflow = '';
-        lightboxMediaContainer.innerHTML = '';
-    }
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxNext.addEventListener('click', showNextMedia);
+    lightboxPrev.addEventListener('click', showPrevMedia);
 
-    function showNext() {
-        currentIndex = (currentIndex + 1) % shuffledItems.length;
-        showLightbox(currentIndex);
-    }
-
-    function showPrev() {
-        currentIndex = (currentIndex - 1 + shuffledItems.length) % shuffledItems.length;
-        showLightbox(currentIndex);
-    }
-    
-    galleryContainer.addEventListener('click', (e) => {
-        const item = e.target.closest('.gallery-item');
-        if (item && item.dataset.index) {
-            showLightbox(item.dataset.index);
-        }
-    });
-
-    closeButton.addEventListener('click', hideLightbox);
     lightbox.addEventListener('click', (e) => {
         if (e.target === lightbox) {
-            hideLightbox();
+            closeLightbox();
         }
     });
 
-    nextButton.addEventListener('click', showNext);
-    prevButton.addEventListener('click', showPrev);
-    
     document.addEventListener('keydown', (e) => {
         if (lightbox.classList.contains('hidden')) return;
-        if (e.key === 'ArrowRight') showNext();
-        else if (e.key === 'ArrowLeft') showPrev();
-        else if (e.key === 'Escape') hideLightbox();
+
+        if (e.key === 'ArrowRight') {
+            showNextMedia();
+        } else if (e.key === 'ArrowLeft') {
+            showPrevMedia();
+        } else if (e.key === 'Escape') {
+            closeLightbox();
+        }
     });
 
-    shuffleArray(shuffledItems);
-    populateGallery();
-    setupLazyLoader();
+    let touchstartX = 0;
+    let touchendX = 0;
+    let touchstartY = 0;
+    let touchendY = 0;
+
+    lightbox.addEventListener('touchstart', e => {
+        touchstartX = e.changedTouches[0].screenX;
+        touchstartY = e.changedTouches[0].screenY;
+    }, { passive: true });
+
+    lightbox.addEventListener('touchend', e => {
+        touchendX = e.changedTouches[0].screenX;
+        touchendY = e.changedTouches[0].screenY;
+        handleSwipe();
+    });
+
+    function handleSwipe() {
+        const swipeDistX = touchendX - touchstartX;
+        const swipeDistY = touchendY - touchstartY;
+        const swipeThreshold = 50;
+        const verticalThreshold = 100;
+
+        if (Math.abs(swipeDistX) > swipeThreshold && Math.abs(swipeDistY) < verticalThreshold) {
+            if (swipeDistX < 0) {
+                showNextMedia();
+            } else {
+                showPrevMedia();
+            }
+        }
+    }
+
+    renderGallery();
+    window.addEventListener('resize', renderGallery);
 }
